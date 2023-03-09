@@ -2,6 +2,7 @@ package sample;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Objects;
 
 public class Group {
 
@@ -77,4 +78,32 @@ public class Group {
         }
         return result;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Group group)) return false;
+        return Objects.equals(groupName, group.groupName) && Arrays.equals(students, group.students);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(groupName);
+        result = 31 * result + Arrays.hashCode(students);
+        return result;
+    }
+
+    public boolean anExtraStudent(Group group1) {
+        for (int i = 0; i < students.length; i++) {
+            for (int j = 0; j < students.length; j++) {
+                if (students[i].equals(students[j])) {
+                    System.out.println("Student " + students[i].getLastName()+" "+ students[i].getName()+" the student is already in the group");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
 }

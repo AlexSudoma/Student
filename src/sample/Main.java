@@ -49,6 +49,8 @@ public class Main {
 
         System.out.println(group1.removeStudentByID(9));
 
+        group1.anExtraStudent(group1);
+
         group1.sortStudentsByLastName();
 
         System.out.println(group1);
@@ -59,6 +61,7 @@ public class Main {
 
         System.out.println(st11);
 
+
         GroupFileStorage group = new GroupFileStorage();
 
         try {
@@ -66,6 +69,7 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
         File fileFrom = new File("D:\\Java\\java_start\\Class Human Student\\Students\\Group.csv");
         Group group2 = new Group();

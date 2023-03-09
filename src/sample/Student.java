@@ -1,5 +1,7 @@
 package sample;
 
+import java.util.Objects;
+
 public class Student extends Human {
 
     private int id;
@@ -36,6 +38,16 @@ public class Student extends Human {
         return "Student [id=" + id + ", groupName=" + groupName + "]" + super.toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student student)) return false;
+        if (!super.equals(o)) return false;
+        return id == student.id && Objects.equals(groupName, student.groupName);
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, groupName);
+    }
 }
