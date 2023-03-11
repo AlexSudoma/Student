@@ -49,7 +49,6 @@ public class Main {
 
         System.out.println(group1.removeStudentByID(9));
 
-        group1.anExtraStudent(group1);
 
         group1.sortStudentsByLastName();
 
@@ -82,5 +81,6 @@ public class Main {
         File search = group.findFileByGroupName("Group.csv",
                 new File("D:\\Java\\java_start\\Class Human Student\\Students\\"));
 
+        group1.anExtraStudent(group1);
     }
 }

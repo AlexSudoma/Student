@@ -96,9 +96,11 @@ public class Group {
     public boolean anExtraStudent(Group group1) {
         for (int i = 0; i < students.length; i++) {
             for (int j = 0; j < students.length; j++) {
-                if (students[i].equals(students[j])) {
-                    System.out.println("Student " + students[i].getLastName()+" "+ students[i].getName()+" the student is already in the group");
-                    return true;
+                if (i != j && students[i] != null && students[j] != null) {
+                    if (students[i].equals(students[j])) {
+                        System.out.println("Student " + students[i].getLastName() + " " + students[i].getName() + " the student is already in the group");
+                        return true;
+                    }
                 }
             }
         }
