@@ -1,16 +1,16 @@
 package sample;
 
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Group {
 
     private String groupName;
 
-    public final Student[] students;
+    private List<Student> students = new ArrayList<>();
 
-    public Group(String groupName, Student[] students) {
+    public Group(String groupName, List<Student> students) {
         super();
         this.groupName = groupName;
         this.students = students;
@@ -18,7 +18,6 @@ public class Group {
 
     public Group() {
         super();
-        students = new Student[10];
     }
 
     public String getGroupName() {
@@ -29,83 +28,80 @@ public class Group {
         this.groupName = groupName;
     }
 
-    public Student[] getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
     public void addStudent(Student student) throws GroupOverflowException {
-        for (int i = 0; i < students.length; i++) {
-            if (students[i] == null) {
-                students[i] = student;
+        if (students.size() <= 10) {
+            students.add(student);
                 return;
             }
-        }
+
         throw new GroupOverflowException();
     }
     public Student searchStudentByLastName(String lastName) throws StudentNotFoundException {
-        for (int i = 0; i < students.length; i++) {
-            if (students[i] != null) {
-                if (students[i].getLastName() == lastName)
-                    return students[i];
+        for (int i = 0; i < students.size(); i++) {
+            if (students.get(i).getLastName().equals(lastName)) {
+                return students.get(i);
             }
         }
         throw new StudentNotFoundException();
     }
 
     public boolean removeStudentByID(int id) {
-        for (int i = 0; i < students.length; i++) {
-            if (students[i] != null) {
-                if (students[i].getId() == id) {
-                    students[i] = null;
-                    return true;
-                }
+        for (int i = 0; i < students.size(); i++)
+            if (students.get(i).getId() == id) {
+                students.remove(i);
+                return true;
             }
-        }
+
         return false;
     }
 
     public void sortStudentsByLastName() {
-        Arrays.sort(students, Comparator.nullsFirst(new SortStudentsByLastNameComparator()));
+        students.sort(new SortStudentsByLastNameComparator());
     }
 
-    @Override
-    public String toString() {
-        String result = "Group " + groupName + System.lineSeparator();
-        for (int i = 0; i < students.length; i++) {
-            if(students[i]!=null) {
-                result+=students[i]+System.lineSeparator();
-            }
-        }
-        return result;
-    }
-
-    @Override
+       @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Group group)) return false;
-        return Objects.equals(groupName, group.groupName) && Arrays.equals(students, group.students);
+        if (o == null || getClass() != o.getClass()) return false;
+        Group group = (Group) o;
+        return Objects.equals(groupName, group.groupName) && Objects.equals(students, group.students);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(groupName);
-        result = 31 * result + Arrays.hashCode(students);
-        return result;
+        return Objects.hash(groupName, students);
     }
 
     public boolean anExtraStudent(Group group1) {
-        for (int i = 0; i < students.length; i++) {
-            for (int j = 0; j < students.length; j++) {
-                if (i != j && students[i] != null && students[j] != null) {
-                    if (students[i].equals(students[j])) {
-                        System.out.println("Student " + students[i].getLastName() + " " + students[i].getName() + " the student is already in the group");
+        for (int i = 0; i < students.size(); i++) {
+            for (int j = 0; j < students.size(); j++) {
+                if (i != j && students.get(i).equals(students.get(j))) {
+                    System.out.println("Student " + students.get(i).getLastName() + " " + students.get(i).getName() + " the student is already in the group");
                         return true;
                     }
                 }
             }
-        }
+
         return false;
     }
 
+    @Override
+    public String toString() {
+        String result = "Group: " + getGroupName() + System.lineSeparator();
+        for (int i = 0; i < students.size(); i++) {
 
+            result += (i + 1) + "." + students.get(i) + System.lineSeparator();
+
+        }
+        return result;
+
+    }
 }

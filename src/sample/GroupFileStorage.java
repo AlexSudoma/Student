@@ -3,19 +3,20 @@ package sample;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Scanner;
 
 public class GroupFileStorage {
 
     public void saveGroupToCSV(Group gr) throws IOException {
-        Student[] student = gr.getStudents();
+        List<Student> student = gr.getStudents();
         File folder = new File("Students");
         folder.mkdirs();
         try (PrintWriter pw = new PrintWriter(new File(folder, "Group.csv"))) {
-            for (int i = 0; i < student.length; i++) {
-                if (student[i] != null) {
-                    pw.println(student[i].getName() + "-" + student[i].getLastName() + "-" + student[i].getGender()
-                            + "-" + student[i].getId() + "");
+            for (int i = 0; i < student.size(); i++) {
+                if (student.get(i) != null) {
+                    pw.println(student.get(i).getName() + "-" + student.get(i).getLastName() + "-" + student.get(i).getGender()
+                            + "-" + student.get(i).getId() + "");
                 }
             }
         } catch (NullPointerException e) {
